@@ -2,6 +2,8 @@
 ## Author: Yangfeng Ji
 ## Date: 08-29-2013
 ## Time-stamp: <yangfeng 11/06/2014 14:40:27>
+from sets import Set
+
 
 class SpanNode(object):
     """ RST tree node
@@ -31,6 +33,12 @@ class SpanNode(object):
         self.nodelist = []
         # Relation form: NN, NS, SN
         self.form = None
+        # Promotional set
+        self.promotional = Set()
+        # Depth
+        self.depth = 1
+        # Marcu score
+        self.marcu = 0
         
 
 class ParseError(Exception):

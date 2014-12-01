@@ -18,6 +18,45 @@ from collections import defaultdict
 from scipy.sparse import lil_matrix
 from cPickle import dump
 import os, numpy, gzip
+import heapq
+
+from buildtree import BFTbin
+
+def calc_marcu(rst):
+    # return a heap
+    top_scoring = []
+
+    elem_units = []
+    bft_nodelist = []
+
+    # First, do BFT and add leaves (elementary units) to the list
+    queue = [rst.tree]
+    while queue:
+        node = queue.pop(0)
+
+        # Update total depth of tree
+        rst.tree_depth = max(node.depth, rst.tree_depth)
+
+        bft_nodelist.append(node)
+        if node.lnode is not None:
+            node.lnode.depth = node.depth + 1
+            queue.append(node.lnode)
+        if node.rnode is not None:
+            queue.append(node.rnode)
+            node.rnode.depth = node.depth + 1
+        if node.rnode is None and node.lnode is None:
+            elem_units.append(node)
+
+    # Calculate marcu score for each elementary unit
+    for elem in elem_units:
+        for subtree in bft_nodelist:
+            if elem in subtree.promotional:
+                elem.marcu = rst.tree_depth - subtree.depth + 1
+                heapq.heappush(top_scoring, (-elem.marcu, elem))
+                break;
+
+    top_scoring = heapq.nsmallest(2, top_scoring) ## TODO
+    return top_scoring
 
 class Data(object):
     def __init__(self, vocab={}, labelmap={}):
@@ -45,6 +84,7 @@ class Data(object):
         for fname in files:
             rst = RSTTree(fname=fname)
             rst.build()
+            top_scoring = calc_marcu(rst)
             actionlist, samplelist = rst.generate_samples()
             self.actionlist += actionlist
             self.samplelist += samplelist

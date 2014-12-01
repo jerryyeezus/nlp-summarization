@@ -30,6 +30,7 @@ class RSTTree(object):
         self.fname = fname
         self.binary = True
         self.tree = tree
+        self.tree_depth = 0
 
 
     def build(self):

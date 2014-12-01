@@ -261,6 +261,14 @@ def backprop(tree):
                 else:
                     node.relation = __getrelationinfo(node.lnode, node.rnode)
             node.form, node.nucspan = __getforminfo(node.lnode, node.rnode)
+
+            # Calculate Promotional set
+            if node.lnode.prop == 'Nucleus':
+                for elem in node.lnode.promotional:
+                    node.promotional.add(elem);
+            if node.rnode.prop == 'Nucleus':
+                for elem in node.rnode.promotional:
+                    node.promotional.add(elem);
         elif (node.lnode is None) and (node.rnode is not None):
             # Illegal node
             pass
@@ -269,7 +277,7 @@ def backprop(tree):
             pass
         else:
             # Leaf node
-            pass
+            node.promotional.add(node)
     return treenodes[-1]
 
 
