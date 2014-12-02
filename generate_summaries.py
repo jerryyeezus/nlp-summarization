@@ -53,25 +53,24 @@ def calc_marcu(rst, summary_factor=0.2):
         else:
             node.promotional.add(node)
 
-
     # STEP 3
     # Calculate marcu score for each elementary unit based on promotional sets
     for elem in elem_units:
         for subtree in bft_nodelist:
             if elem in subtree.promotional:
                 elem.marcu = rst.tree_depth - subtree.depth + 1
-                heapq.heappush(top_scoring, (-elem.marcu, elem))
+                top_scoring.append(((-elem.marcu, elem.eduspan[0]), elem))
                 break;
-            if elem.marcu == 0:
-                print "Shouldn't have happened."
 
+    # Sort it by marcu score THEN eduspan
+    top_scoring = sorted(top_scoring, key = lambda x : (x[0][0], x[0][1]))
+
+    # p is number of edu's we ues for summary
     p = max(1, int(round(summary_factor * p)))
 
-    # ret = heapq.nsmallest(p, top_scoring) ## TODO
-
+    # Pop p and while the last score is the same
     ret = []
     last_score = None
-    # Pop off last two
     while p > 0 or last_score == top_scoring[0][1].marcu:
         tmp = heapq.heappop(top_scoring)[1]
         ret.append(tmp)
@@ -92,8 +91,17 @@ def generate_summaries(path):
     for fedus in doclist:
         pred_rst = parse(pm, fedus=fedus)
         top_scoring = calc_marcu(pred_rst, summary_factor=0.2)
+        summary_fname = fedus.replace('.edus', '.summary')
+        s = []
         for edu in top_scoring:
-            print edu.text
-
-    # TODO order it by eduspan
+            edu.text = edu.text.strip()
+            caps = edu.text.upper()
+            edu.text = list(edu.text)
+            edu.text[0] = caps[0]
+            edu.text = "".join(edu.text)
+            s.append(str(edu.text))
+        s = '. '.join(s).replace('\t', '').strip()
+        f = open(summary_fname, 'w')
+        f.write(s.encode("UTF-8"))
+        f.close()
 
