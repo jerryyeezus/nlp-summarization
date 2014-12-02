@@ -8,7 +8,7 @@ from os import listdir
 from evalparser import parse
 from buildtree import BFTbin
 
-def calc_marcu(rst, summary_factor=0.2):
+def calc_marcu(rst, summary_factor=0.2, summary_p = None):
     top_scoring = [] # return list
 
     elem_units = []
@@ -66,7 +66,10 @@ def calc_marcu(rst, summary_factor=0.2):
     top_scoring = sorted(top_scoring, key = lambda x : (x[0][0], x[0][1]))
 
     # p is number of edu's we ues for summary
-    p = max(1, int(round(summary_factor * p)))
+    if summary_p is not None:
+        p = summary_p
+    else:
+        p = max(1, int(round(summary_factor * p)))
 
     # Pop p and while the last score is the same
     ret = []
@@ -90,7 +93,7 @@ def generate_summaries(path):
     doclist = [joinpath(path, fname) for fname in listdir(path) if fname.endswith('.edus')]
     for fedus in doclist:
         pred_rst = parse(pm, fedus=fedus)
-        top_scoring = calc_marcu(pred_rst, summary_factor=0.2)
+        top_scoring = calc_marcu(pred_rst, summary_p = 2)
         summary_fname = fedus.replace('.edus', '.summary')
         s = []
         for edu in top_scoring:

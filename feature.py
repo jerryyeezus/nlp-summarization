@@ -105,8 +105,24 @@ class FeatureGenerator(object):
         """
         features = []
         # Add the first token from the top-1st span on stack
+        if self.stackspan1 is not None:
+            features.append(('Begin-Word-stackspan1', self.stackspan1.text.split()[0]))
+            features.append(('End-Word-stackspan1', self.stackspan1.text.split()[-1]))
+        if self.stackspan2 is not None:
+            features.append(('Begin-Word-stackspan2', self.stackspan2.text.split()[0]))
+            features.append(('End-Word-stackspan2', self.stackspan2.text.split()[-1]))
+        if self.stackspan1 is not None and self.queuespan1 is not None:
+            features.append(('Begin-Word-stackSpan1-queuespan1', self.stackspan1.text.split()[0], self.queuespan1.text.split()[0]))
+            features.append(('End-Word-stackSpan1-queuespan1', self.stackspan1.text.split()[-1], self.queuespan1.text.split()[-1]))
+        if self.stackspan1 is not None and self.stackspan2 is not None:
+            features.append(('Begin-Word-stackSpan1-stackspan2', self.stackspan1.text.split()[0], self.stackspan2.text.split()[0]))
+            features.append(('End-Word-stackSpan1-stackspan2', self.stackspan1.text.split()[-1], self.stackspan2.text.split()[-1]))
+        if self.stackspan2 is not None and self.queuespan1 is not None:
+            features.append(('Begin-Word-stackSpan2-queuespan1', self.stackspan2.text.split()[0], self.queuespan1.text.split()[0]))
+            features.append(('End-Word-stackSpan2-queuespan1', self.stackspan2.text.split()[-1], self.queuespan1.text.split()[-1]))
+        if self.queuespan1 is not None:
+            features.append(('Begin-Word-queuespan1', self.queuespan1.text.split()[0]))
+            features.append(('End-Word-queuespan1', self.queuespan1.text.split()[-1]))
 
         for feat in features:
             yield feat
-            
-        
