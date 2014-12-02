@@ -1,11 +1,12 @@
+import codecs
 import nltk.data
 
 def create_edus(infilename, outfilename):
-  text = open(infilename).read()
+  text = open(infilename).read() #.decode("ISO-8859-1").encode("UTF-8")
   sent_detector = nltk.data.load('tokenizers/punkt/english.pickle')
   sentences = sent_detector.tokenize(text.strip())
-  out = open(outfilename, 'w')
-  for sentence in sentences:
-    out.write(sentence + "\n");
+  with codecs.open(outfilename, 'w') as out:
+    for sentence in sentences:
+      out.write(sentence + "\n")
 
-#create_edus("./examples/battery-life_amazon_kindle.txt.data", "./examples/battery-life.edus")
+create_edus("./topics/battery-life_amazon_kindle.txt.data", "./summary/battery-life.edus")

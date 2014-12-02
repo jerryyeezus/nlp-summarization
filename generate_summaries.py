@@ -103,8 +103,8 @@ def generate_summaries(path):
             edu.text[0] = caps[0]
             edu.text = "".join(edu.text)
             s.append(str(edu.text))
-        s = '. '.join(s).replace('\t', '').strip()
+        s = ' '.join(s).replace('\t', '').strip()
         f = open(summary_fname, 'w')
-        f.write(s.encode("UTF-8"))
+        f.write(s)
         f.close()
 
