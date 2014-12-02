@@ -121,5 +121,6 @@ class ParsingModel(object):
   
         tree = srparser.getparsetree()
         rst = RSTTree(tree=tree)
+
         return rst
             

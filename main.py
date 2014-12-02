@@ -4,6 +4,7 @@
 ## Time-stamp: <yangfeng 11/06/2014 10:06:38>
 
 from data import Data
+from generate_summaries import *
 from model import ParsingModel
 from tree import RSTTree
 from evaluation import Metrics
@@ -53,6 +54,7 @@ if __name__ == '__main__':
     # Evaluate on dev/test documents
     print 'Evaluating the parsing performance ...'
     evalparser(path='./examples', report=True)
-    
 
+    print "Generating summaries"
+    generate_summaries(path='./summary')
     
