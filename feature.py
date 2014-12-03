@@ -124,5 +124,9 @@ class FeatureGenerator(object):
             features.append(('Begin-Word-queuespan1', self.queuespan1.text.split()[0]))
             features.append(('End-Word-queuespan1', self.queuespan1.text.split()[-1]))
 
+        # POS stuff
+        # TODO
+        # features.append(('Begin-Tag-stackspan1', self.stackspan1.pos[0]))
+
         for feat in features:
             yield feat

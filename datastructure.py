@@ -39,6 +39,8 @@ class SpanNode(object):
         self.depth = 1
         # Marcu score
         self.marcu = 0
+        # POS
+        self.pos = None
         
 
 class ParseError(Exception):
