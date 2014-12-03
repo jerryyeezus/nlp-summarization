@@ -126,12 +126,15 @@ class FeatureGenerator(object):
 
         # POS features
         if self.stackspan1 is not None:
-            features.append(('Begin-Tag-stackspan1', self.stackspan1.pos[0]))
-            features.append(('End-Tag-stackspan1', self.stackspan1.pos[-1]))
+            features.append(('Begin-Tag-stackspan1', self.stackspan1.tags[0]))
+            features.append(('End-Tag-stackspan1', self.stackspan1.tags[-1]))
 
         if self.stackspan2 is not None:
-            features.append(('Begin-Tag-stackspan2', self.stackspan2.pos[0]))
-            features.append(('Begin-Tag-stackspan2', self.stackspan2.pos[-1]))
+            features.append(('Begin-Tag-stackspan2', self.stackspan2.tags[0]))
+            features.append(('End-Tag-stackspan2', self.stackspan2.tags[-1]))
+
+        if self.stackspan1 is not None and self.queuespan1 is not None:
+            features.append(('Begin-Tag-Stackspan1-Queuespan1', self.stackspan1.tags[0], self.queuespan1.tags[0]))
 
         for feat in features:
             yield feat
