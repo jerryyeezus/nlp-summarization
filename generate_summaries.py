@@ -74,7 +74,7 @@ def calc_marcu(rst, summary_factor=0.2, summary_p = None):
     # Pop p and while the last score is the same
     ret = []
     last_score = None
-    while p > 0 or last_score == top_scoring[0][1].marcu:
+    while p > 0: # or last_score == top_scoring[0][1].marcu:
         tmp = heapq.heappop(top_scoring)[1]
         ret.append(tmp)
         last_score = tmp.marcu

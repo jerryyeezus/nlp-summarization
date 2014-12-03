@@ -10,6 +10,9 @@
 4, Check whether should stop parsing
 - YJ
 """
+from textblob import TextBlob
+from textblob_aptagger import PerceptronTagger
+perceptron_tagger = PerceptronTagger()
 
 from datastructure import *
 from util import *
@@ -41,6 +44,8 @@ class SRParser:
             node.text = text
             node.eduspan, node.nucspan = (n, n), (n, n)
             node.nucedu = n
+            textblob = TextBlob(text, pos_tagger=perceptron_tagger)
+            node.tags = [x[1] for x in textblob.tags]
             self.Queue.append(node)
 
 
@@ -77,6 +82,8 @@ class SRParser:
             node.text = lnode.text + " " + rnode.text
             # EDU span
             node.eduspan = (lnode.eduspan[0],rnode.eduspan[1])
+            # POS tags
+            node.tags = lnode.tags + rnode.tags
             # Nuc span / Nuc EDU
             if form == 'NN':
                 node.nucspan = (lnode.eduspan[0],rnode.eduspan[1])

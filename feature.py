@@ -124,9 +124,14 @@ class FeatureGenerator(object):
             features.append(('Begin-Word-queuespan1', self.queuespan1.text.split()[0]))
             features.append(('End-Word-queuespan1', self.queuespan1.text.split()[-1]))
 
-        # POS stuff
-        # TODO
-        # features.append(('Begin-Tag-stackspan1', self.stackspan1.pos[0]))
+        # POS features
+        if self.stackspan1 is not None:
+            features.append(('Begin-Tag-stackspan1', self.stackspan1.pos[0]))
+            features.append(('End-Tag-stackspan1', self.stackspan1.pos[-1]))
+
+        if self.stackspan2 is not None:
+            features.append(('Begin-Tag-stackspan2', self.stackspan2.pos[0]))
+            features.append(('Begin-Tag-stackspan2', self.stackspan2.pos[-1]))
 
         for feat in features:
             yield feat
