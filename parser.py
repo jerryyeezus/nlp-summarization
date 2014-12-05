@@ -45,7 +45,7 @@ class SRParser:
             node.text = text
             node.eduspan, node.nucspan = (n, n), (n, n)
             node.nucedu = n
-            node.head_words = get_head_words(node.text);
+            node.head_words, node.head_words_indices = get_head_words(node.text);
             textblob = TextBlob(text, pos_tagger=perceptron_tagger)
             node.tags = [x[1] for x in textblob.tags]
             self.Queue.append(node)

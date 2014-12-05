@@ -134,7 +134,7 @@ def createnode(node, content):
             node.nucedu = c[1]
         elif c[0] == 'text':
             node.text = c[1]
-            node.head_words = get_head_words(node.text)
+            node.head_words, node.head_words_indices = get_head_words(node.text)
             textblob = TextBlob(c[1], pos_tagger=perceptron_tagger)
             node.tags = [x[1] for x in textblob.tags]
             # words = [x[0] for x in textblob.tags]

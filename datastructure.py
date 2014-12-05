@@ -43,6 +43,7 @@ class SpanNode(object):
         self.tags = None
         # Head words array
         self.head_words = None
+        self.head_words_indices = None
         
 
 class ParseError(Exception):
