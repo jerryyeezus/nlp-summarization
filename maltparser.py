@@ -6,7 +6,6 @@ def get_head_words(txt):
     graph = parser.raw_parse(txt)
     head_words = []
     head_word_indices = []
-    return head_words, head_word_indices
     for i in range(1, len(graph.nodelist)):
         head_word_indices.append(graph.nodelist[i]['head'])
         if graph.nodelist[i]['head'] == 0:
