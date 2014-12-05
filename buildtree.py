@@ -7,6 +7,7 @@ from datastructure import *
 from textblob import TextBlob
 from textblob_aptagger import PerceptronTagger
 from util import extractrelation
+from maltparser import get_head_words
 
 perceptron_tagger = PerceptronTagger()
 
@@ -133,6 +134,7 @@ def createnode(node, content):
             node.nucedu = c[1]
         elif c[0] == 'text':
             node.text = c[1]
+            node.head_words = get_head_words(node.text)
             textblob = TextBlob(c[1], pos_tagger=perceptron_tagger)
             node.tags = [x[1] for x in textblob.tags]
             # words = [x[0] for x in textblob.tags]
@@ -261,7 +263,7 @@ def backprop(tree):
             # Non-leaf node
             # Backpropagate the tags from children
             node.tags = node.lnode.tags + node.rnode.tags
-
+            node.head_words = node.lnode.head_words + node.rnode.head_words
             node.eduspan = __getspaninfo(node.lnode, node.rnode)
             node.text = __gettextinfo(node.lnode, node.rnode)
             if node.relation is None:

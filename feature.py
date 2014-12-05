@@ -123,6 +123,9 @@ class FeatureGenerator(object):
         if self.queuespan1 is not None:
             features.append(('Begin-Word-queuespan1', self.queuespan1.text.split()[0]))
             features.append(('End-Word-queuespan1', self.queuespan1.text.split()[-1]))
+		# HEAD WORD feature
+        if self.stackspan2 is not None and len(self.stackspan2.head_words) > 0:
+			features.append(('Head-Words-stackspan2', self.stackspan2.head_words[0]))
 
         # POS features
         if self.stackspan1 is not None:

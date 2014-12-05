@@ -13,6 +13,7 @@
 from textblob import TextBlob
 from textblob_aptagger import PerceptronTagger
 perceptron_tagger = PerceptronTagger()
+from maltparser import get_head_words
 
 from datastructure import *
 from util import *
@@ -44,6 +45,7 @@ class SRParser:
             node.text = text
             node.eduspan, node.nucspan = (n, n), (n, n)
             node.nucedu = n
+            node.head_words = get_head_words(node.text);
             textblob = TextBlob(text, pos_tagger=perceptron_tagger)
             node.tags = [x[1] for x in textblob.tags]
             self.Queue.append(node)
@@ -84,6 +86,8 @@ class SRParser:
             node.eduspan = (lnode.eduspan[0],rnode.eduspan[1])
             # POS tags
             node.tags = lnode.tags + rnode.tags
+            # Head words
+            node.head_words = lnode.head_words + rnode.head_words
             # Nuc span / Nuc EDU
             if form == 'NN':
                 node.nucspan = (lnode.eduspan[0],rnode.eduspan[1])

@@ -41,6 +41,8 @@ class SpanNode(object):
         self.marcu = 0
         # POS tags array
         self.tags = None
+        # Head words array
+        self.head_words = None
         
 
 class ParseError(Exception):
