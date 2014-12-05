@@ -9,7 +9,7 @@ from evalparser import parse
 from nltk import word_tokenize
 from buildtree import BFTbin
 
-adverbial_phr_list = ['For example', 'On the other hand', 'As a matter of fact', 'At this point', 'After I plugged']
+adverbial_phr_list = ['For example', 'On the other hand', 'As a matter of fact', 'At this point']
 
 def calc_marcu(rst, summary_factor=0.2, summary_p = None):
     top_scoring = [] # return list
