@@ -113,8 +113,7 @@ def generate_summaries(path):
             pp_indices = [i for i,x in enumerate(edu.tags) if x == 'VBG']
             pp_phrase_indices = set(pp_indices)
             for idx in pp_indices:
-                # pp_phrase_indices.add(edu.head_words_indices[idx] - 1) #TODO
-                pass
+                pp_phrase_indices.add(edu.head_words_indices[idx] - 1)
 
             # Remove all PP phrase from sentence
             new_str_array = [v for i,v in enumerate(str_array) if i not in pp_phrase_indices]

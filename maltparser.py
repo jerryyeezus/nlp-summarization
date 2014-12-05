@@ -3,7 +3,7 @@ import nltk.parse.malt
 parser = nltk.parse.malt.MaltParser(working_dir="./maltparser", mco="engmalt.linear-1.7.mco", additional_java_args=['-Xmx512m'])
 
 def get_head_words(txt):
-    # graph = parser.raw_parse(txt)
+    graph = parser.raw_parse(txt)
     head_words = []
     head_word_indices = []
     return head_words, head_word_indices
